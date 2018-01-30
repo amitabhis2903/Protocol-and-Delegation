@@ -8,18 +8,40 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, DataCanReverse {
 
+    @IBOutlet weak var label: UILabel!
+    
+    
+    @IBOutlet weak var textField: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func changeScreen(_ sender: Any) {
+        performSegue(withIdentifier: "secondView", sender: self)
     }
+    
 
-
+    @IBAction func changeColor(_ sender: Any) {
+        self.view.backgroundColor = UIColor.blue
+    }
+    
+    //Segue send data to Second Screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "secondView" {
+        let destination = segue.destination as! SecondViewController
+        destination.message = textField.text!
+        destination.delegate = self
+        }
+    }
+    
+    func dataReverse(data: String) {
+        label.text = data
+    }
+    
 }
 
